@@ -233,6 +233,9 @@ public class FingerprintSettings extends SubSettings {
             }
             controllers.add(new FingerprintsEnrolledCategoryPreferenceController(context,
                     KEY_FINGERPRINTS_ENROLLED_CATEGORY));
+            controllers.add(new FingerprintSettingsUser2FAController(
+                                context,
+                                KEY_USER_2FA));
             return controllers;
         }
 
@@ -256,6 +259,8 @@ public class FingerprintSettings extends SubSettings {
         @VisibleForTesting
         static final String KEY_REQUIRE_SCREEN_ON_TO_AUTH =
                 "security_settings_require_screen_on_to_auth";
+        static final String KEY_USER_2FA =
+                "security_settings_user_2fa";
         @VisibleForTesting
         static final String KEY_SCREEN_OFF_FINGERPRINT_UNLOCK =
                 "security_settings_screen_off_unlock_udfps";
@@ -289,10 +294,13 @@ public class FingerprintSettings extends SubSettings {
                 mFingerprintUnlockCategoryPreferenceController;
         private FingerprintSettingsRequireScreenOnToAuthPreferenceController
                 mRequireScreenOnToAuthPreferenceController;
+        private FingerprintSettingsUser2FAController
+                mUser2FAController;
         private FingerprintSettingsScreenOffUnlockUdfpsPreferenceController
                 mScreenOffUnlockUdfpsPreferenceController;
         private Preference mAddFingerprintPreference;
         private RestrictedSwitchPreference mRequireScreenOnToAuthPreference;
+        private RestrictedSwitchPreference mUser2FAPreference;
         private RestrictedSwitchPreference mScreenOffUnlockUdfpsPreference;
         private PreferenceCategory mFingerprintsEnrolledCategory;
         private PreferenceCategory mFingerprintUnlockCategory;
@@ -761,6 +769,7 @@ public class FingerprintSettings extends SubSettings {
             } else if (screenOffUnlockUdfps() && isUdfps()) {
                 setupFingerprintUnlockCategoryPreferencesForScreenOffUnlock();
             }
+            setupFingerprintUnlockCategoryPreferencesForUser2FA();
             if (mFingerprintUnlockCategoryPreferenceController != null) {
                 updateFingerprintUnlockCategoryVisibility();
             }
@@ -780,6 +789,20 @@ public class FingerprintSettings extends SubSettings {
                 mScreenOffUnlockUdfpsPreference.setVisible(
                         mScreenOffUnlockUdfpsPreferenceController.isAvailable());
             }
+            if (mUser2FAController != null) {
+                mUser2FAPreference.setVisible(mUser2FAController.isAvailable());
+            }
+        }
+
+        private void setupFingerprintUnlockCategoryPreferencesForUser2FA() {
+            mUser2FAPreference = findPreference(KEY_USER_2FA);
+            mUser2FAPreference.setChecked(mUser2FAController.isChecked());
+            mUser2FAPreference.setOnPreferenceChangeListener(
+                (preference, newValue) -> {
+                    boolean isChecked = (Boolean)newValue;
+                    mUser2FAController.setChecked(isChecked);
+                    return true;
+                });
         }
 
         private void setupFingerprintUnlockCategoryPreferencesForScreenOnToAuth() {
@@ -1055,6 +1078,9 @@ public class FingerprintSettings extends SubSettings {
                         mRequireScreenOnToAuthPreferenceController =
                                 (FingerprintSettingsRequireScreenOnToAuthPreferenceController)
                                         controller;
+                    } else if (controller.getPreferenceKey() == KEY_USER_2FA) {
+                        mUser2FAController =
+                                (FingerprintSettingsUser2FAController)controller;
                     }
 
                 }
@@ -1067,6 +1093,9 @@ public class FingerprintSettings extends SubSettings {
                         mScreenOffUnlockUdfpsPreferenceController =
                                 (FingerprintSettingsScreenOffUnlockUdfpsPreferenceController)
                                         controller;
+                    } else if (controller.getPreferenceKey() == KEY_USER_2FA) {
+                        mUser2FAController =
+                                (FingerprintSettingsUser2FAController)controller;
                     }
 
                 }

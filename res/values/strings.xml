@@ -1186,6 +1186,13 @@
     <string name="security_settings_require_screen_on_to_auth_description">Touch the sensor to unlock, even when the screen is off. This makes accidental unlocking more likely.</string>
     <!-- Description for require screen on to auth toggle shown in fingerprint enrollment dialog once enrollment is completed. [CHAR LIMIT=NONE] -->
     <string name="security_settings_require_screen_on_to_auth_keywords">Screen, Unlock</string>
+
+    <!-- 2FA dialog -->
+    <string name="security_settings_user_2fa_key" translatable="false">security_settings_user_2fa</string>
+    <string name="security_settings_user_2fa_title">Require Two Factor Authentication</string>
+    <string name="security_settings_user_2fa_description">Must unlock first with fingerprint then with pattern/pin/password</string>
+    <string name="security_settings_user_2fa_keywords">2 factor, two factor, 2FA</string>
+
     <!-- Button text to skip enrollment of fingerprint [CHAR LIMIT=40] -->
     <string name="security_settings_fingerprint_enroll_enrolling_skip">Do it later</string>
     <!-- Accessibility message for fingerprint enrollment asking the user to place the tip of their finger on the fingerprint sensor [CHAR LIMIT=NONE] -->

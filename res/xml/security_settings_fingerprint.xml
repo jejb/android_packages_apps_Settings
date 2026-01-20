@@ -50,6 +50,13 @@
             settings:keywords="@string/security_settings_screen_off_unlock_udfps_keywords"
             settings:controller="com.android.settings.biometrics.fingerprint.FingerprintSettingsScreenOffUnlockUdfpsPreferenceController"
             settings:isPreferenceVisible="false"/>
+        <com.android.settingslib.RestrictedSwitchPreference
+            android:key="@string/security_settings_user_2fa_key"
+            android:title="@string/security_settings_user_2fa_title"
+            android:summary="@string/security_settings_user_2fa_description"
+            settings:keywords="@string/security_settings_user_2fa_keywords"
+	    settings:controller="com.android.settings.biometrics.fingerprint.FingerprintSettingsUser2FAController"
+            settings:isPreferenceVisible="false"/>
     </PreferenceCategory>
 
     <PreferenceCategory
